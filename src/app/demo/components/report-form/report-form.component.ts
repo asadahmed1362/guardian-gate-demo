@@ -8,33 +8,41 @@ import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
+import {IncidentData} from 'src/app/demo/api/incident';
+
 
 
 @Component({
     templateUrl: './report-form.component.html',
-    providers: [MessageService]
+    providers: [MessageService],
+    styleUrls: ['./report-form.component.css']
 })
 export class ReportFormComponent implements OnInit, OnDestroy {
-    incidentData = {
-        incidentId: 1,
-        natureOfIncident: '',
-        numberOfRobbers: 0,
-        itemsRobbed: '',
-        injuryOccured: false,
-        propertyDamage: false
-    };
+    // incidentData: IncidentData = {
+    //     incidentId: 1,
+    //     natureOfIncident: 'Robbery',
+    //     numberOfRobbers: 2,
+    //     itemsRobbed: 'Cash and Jewelry',
+    //     injuryOccured: true,
+    //     propertyDamage: true,
+    //     email:'asadahmed1362@hotmail.com',
+    //     status: 'Reported'
+    // };
 
+    incidentDialog: boolean = false
     productDialog: boolean = false;
 
     deleteProductDialog: boolean = false;
-
     deleteProductsDialog: boolean = false;
 
+    incidents : IncidentData[] = [];
     products: Product[] = [];
 
+    incident:IncidentData = {};
     product: Product = {};
 
     selectedProducts: Product[] = [];
+    selectedIncidents: IncidentData[] = [];
 
     submitted: boolean = false;
 
@@ -57,41 +65,45 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.productService.getProducts().then(data => this.products = data);
+        //this.productService.getProducts().then(data => this.products = data);
+        this.incidents =  this.incidentReportService.getIncidents();
 
         this.cols = [
-            { field: 'product', header: 'Product' },
-            { field: 'price', header: 'Price' },
-            { field: 'category', header: 'Category' },
-            { field: 'rating', header: 'Reviews' },
+            { field: 'incident', header: 'Incident' },
+            { field: 'incidentId', header: 'Incident Id' },
+            { field: 'natureOfIncident', header: 'Nature Of Incident' },
             { field: 'inventoryStatus', header: 'Status' }
         ];
 
         this.statuses = [
-            { label: 'INSTOCK', value: 'instock' },
-            { label: 'LOWSTOCK', value: 'lowstock' },
-            { label: 'OUTOFSTOCK', value: 'outofstock' }
+            { label: 'Reported:', value: 'reported' },
+            { label: 'UNDERINVESTIGATION', value: 'UnderInvestigation' },
+            { label: 'PENDING', value: 'pending' },
+            { label: 'RESOLVED', value: 'resolved' }
         ];
     }
 
     openNew() {
-        this.product = {};
+        // this.product = {};
+        // this.submitted = false;
+        // this.productDialog = true;
+        this.incidentDialog = true;
+        this.incident = {};
         this.submitted = false;
-        this.productDialog = true;
     }
 
     deleteSelectedProducts() {
-        this.deleteProductsDialog = true;
+        // this.deleteProductsDialog = true;
     }
 
     editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
+        // this.product = { ...product };
+        // this.productDialog = true;
     }
 
     deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
+        // this.deleteProductDialog = true;
+        // this.product = { ...product };
     }
 
     confirmDeleteSelected() {
@@ -102,14 +114,16 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     }
 
     confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.product = {};
+        // this.deleteProductDialog = false;
+        // this.products = this.products.filter(val => val.id !== this.product.id);
+        // this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        // this.product = {};
     }
 
     hideDialog() {
-        this.productDialog = false;
+        // this.productDialog = false;
+        // this.submitted = false;
+        this.incidentDialog = false;
         this.submitted = false;
     }
 
@@ -138,6 +152,25 @@ export class ReportFormComponent implements OnInit, OnDestroy {
         }
     }
 
+    saveIncident() {
+        this.submitted = true;
+        this.incident.status = "Reported";
+        this.incident.email = "asadahmed1362@hotmail.com";
+        this.incidentReportService.reportIncident(this.incident)
+          .subscribe(response => {
+            console.log('Incident reported:', response);
+            alert('Incident reported successfully!');
+            this.incidents.push(this.incident);
+            this.incidentDialog = false;
+            this.incident = {};
+          }, error => {
+            console.error('Error reporting incident:', error);
+            alert('Error reporting incident!');
+            this.submitted = false;
+          });
+    
+    }
+
     findIndexById(id: string): number {
         let index = -1;
         for (let i = 0; i < this.products.length; i++) {
@@ -164,14 +197,14 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        this.incidentReportService.reportIncident(this.incidentData)
-          .subscribe(response => {
-            console.log('Incident reported:', response);
-            alert('Incident reported successfully!');
-          }, error => {
-            console.error('Error reporting incident:', error);
-            alert('Error reporting incident!');
-          });
+        // this.incidentReportService.reportIncident(this.incidentData)
+        //   .subscribe(response => {
+        //     console.log('Incident reported:', response);
+        //     alert('Incident reported successfully!');
+        //   }, error => {
+        //     console.error('Error reporting incident:', error);
+        //     alert('Error reporting incident!');
+        //   });
       }
 
     ngOnDestroy() {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {IncidentData} from 'src/app/demo/api/incident';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ import { Observable } from 'rxjs';
   
     constructor(private http: HttpClient) { }
   
-    reportIncident(incidentData: any): Observable<any> {
+    reportIncident(incidentData: IncidentData): Observable<any> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       return this.http.post<any>(this.postApiUrl, incidentData, { headers });
     }
@@ -20,4 +21,43 @@ import { Observable } from 'rxjs';
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       return this.http.get<any>(this.getApiUrl, { headers });
     }
+
+    // Method to get dummy incidents
+  getIncidents(): IncidentData[] {
+    const incidents: IncidentData[] = [
+      {
+        incidentId: 1,
+        natureOfIncident: 'Robbery',
+        numberOfRobbers: 3,
+        itemsRobbed: 'Jewelry, Cash',
+        injuryOccured: true,
+        propertyDamage: true,
+        email:'asadahmed1362@hotmail.com',
+        status: 'Reported'
+      },
+      {
+        incidentId: 2,
+        natureOfIncident: 'Burglary',
+        numberOfRobbers: 1,
+        itemsRobbed: 'Electronics',
+        injuryOccured: false,
+        propertyDamage: false,
+        email:'asadahmed1362@hotmail.com',
+        status: 'Reported'
+      },
+      {
+        incidentId: 3,
+        natureOfIncident: 'Assault',
+        numberOfRobbers: 2,
+        itemsRobbed: '',
+        injuryOccured: true,
+        propertyDamage: false,
+        email:'asadahmed1362@hotmail.com',
+        status: 'Reported'
+      },
+    ];
+
+    return incidents;
+  }
+
   }
