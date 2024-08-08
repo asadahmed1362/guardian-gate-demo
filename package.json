@@ -2,6 +2,8 @@
     "name": "sakai-ng",
     "version": "14.0.0",
     "scripts": {
+        "predeploy": "mkdir -p dist/sakai-ng/browser",
+        "deploy": "ng deploy --repo=https://github.com/asadahmed1362/guardian-gate-demo.git --name='asadahmed1362' --base-href=/guardian-gate-app/",
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
