@@ -6,7 +6,7 @@
         "deploy": "ng deploy --repo=https://github.com/asadahmed1362/guardian-gate-demo.git --name='asadahmed1362' --base-href=/guardian-gate-app/",
         "ng": "ng",
         "start": "ng serve",
-        "build": "ng build",
+        "build": "ng build --no-nojekyll",
         "watch": "ng build --watch --configuration development",
         "test": "ng test"
     },
