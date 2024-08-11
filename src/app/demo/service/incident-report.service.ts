@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {IncidentData, IncidentType} from 'src/app/demo/api/incident';
 import { KeyValueOptions } from 'src/app/demo/api/common';
 
@@ -81,6 +81,135 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
     ];
 
     return incidents;
+  }
+
+  getIncidentsAPI(): Observable<IncidentData[]> {
+    const incidents: IncidentData[] = [
+      {
+        incidentId: 1,
+        natureOfIncident: 'Robbery',
+        numberOfRobbers: 3,
+        itemsRobbed: 'Jewelry, Cash',
+        injuryOccured: true,
+        propertyDamage: true,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Reported',
+        timestamp: new Date('2023-01-15T10:00:00Z'),
+      },
+      {
+        incidentId: 2,
+        natureOfIncident: 'Shoplifting',
+        numberOfRobbers: 1,
+        itemsRobbed: 'Clothing',
+        injuryOccured: false,
+        propertyDamage: false,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Reported',
+        timestamp: new Date('2023-03-22T14:30:00Z'),
+      },
+      {
+        incidentId: 3,
+        natureOfIncident: 'Theft Under $5,000',
+        numberOfRobbers: 2,
+        itemsRobbed: 'Electronics',
+        injuryOccured: false,
+        propertyDamage: true,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Investigating',
+        timestamp: new Date('2023-05-10T09:00:00Z'),
+      },
+      {
+        incidentId: 4,
+        natureOfIncident: 'Fraud',
+        numberOfRobbers: 1,
+        itemsRobbed: 'Credit Card',
+        injuryOccured: false,
+        propertyDamage: false,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Reported',
+        timestamp: new Date('2023-07-30T13:15:00Z'),
+      },
+      {
+        incidentId: 5,
+        natureOfIncident: 'Theft Over $5,000',
+        numberOfRobbers: 4,
+        itemsRobbed: 'Luxury Car',
+        injuryOccured: false,
+        propertyDamage: true,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Resolved',
+        timestamp: new Date('2023-11-18T16:45:00Z'),
+      },
+      {
+        incidentId: 6,
+        natureOfIncident: 'Robbery',
+        numberOfRobbers: 3,
+        itemsRobbed: 'Cash',
+        injuryOccured: true,
+        propertyDamage: false,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Reported',
+        timestamp: new Date('2024-01-10T11:00:00Z'),
+      },
+      {
+        incidentId: 7,
+        natureOfIncident: 'Shoplifting',
+        numberOfRobbers: 2,
+        itemsRobbed: 'Groceries',
+        injuryOccured: false,
+        propertyDamage: false,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Reported',
+        timestamp: new Date('2024-03-05T14:00:00Z'),
+      },
+      {
+        incidentId: 8,
+        natureOfIncident: 'Theft Under $5,000',
+        numberOfRobbers: 1,
+        itemsRobbed: 'Smartphone',
+        injuryOccured: false,
+        propertyDamage: true,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Investigating',
+        timestamp: new Date('2024-06-12T09:30:00Z'),
+      },
+      {
+        incidentId: 9,
+        natureOfIncident: 'Fraud',
+        numberOfRobbers: 2,
+        itemsRobbed: 'Bank Account',
+        injuryOccured: false,
+        propertyDamage: false,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Resolved',
+        timestamp: new Date('2024-08-22T15:00:00Z'),
+      },
+      {
+        incidentId: 10,
+        natureOfIncident: 'Theft Over $5,000',
+        numberOfRobbers: 3,
+        itemsRobbed: 'Jewelry',
+        injuryOccured: false,
+        propertyDamage: true,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Reported',
+        timestamp: new Date('2024-12-30T18:20:00Z'),
+      },
+      {
+        incidentId: 11,
+        natureOfIncident: 'Shoplifting',
+        numberOfRobbers: 2,
+        itemsRobbed: 'Groceries',
+        injuryOccured: false,
+        propertyDamage: false,
+        email: 'asadahmed1362@hotmail.com',
+        status: 'Reported',
+        timestamp: new Date('2024-07-20T14:00:00Z'),
+      }
+    ];
+
+    // Return the incidents array as an Observable
+    return of(incidents);
   }
 
   }

@@ -7,6 +7,7 @@ export interface IncidentData {
     propertyDamage?: boolean;
     email?: string;
     status?: any;
+    timestamp?:Date;
   }
 
   export interface IncidentType {

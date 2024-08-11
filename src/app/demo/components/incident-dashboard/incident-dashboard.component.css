@@ -1,0 +1,27 @@
+.robbery-icon 
+{
+    background-image: url("../../../../assets/demo/images/robbery.png");
+    width: 25px;
+    height: 25px;
+}
+
+.shoplifting-icon 
+{
+    background-image: url("../../../../assets/demo/images/shoplifting.png");
+    width: 25px;
+    height: 25px;
+}
+
+.theftUnder5k-icon 
+{
+    background-image: url("../../../../assets/demo/images/theftUnder5k.png");
+    width: 25px;
+    height: 25px;
+}
+
+.theftAbove5k-icon 
+{
+    background-image: url("../../../../assets/demo/images/theftAbove5k.png");
+    width: 25px;
+    height: 25px;
+}

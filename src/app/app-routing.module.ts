@@ -10,7 +10,7 @@ import { MydashboardComponent } from './demo/components/mydashboard/mydashboard.
             {
                 path: '', component: AppLayoutComponent,
                 children: [
-                    { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    { path: '', loadChildren: () => import('./demo/components/incident-dashboard/incident-dashboard.module').then(m => m.IncidentDashboardModule) },
                     { path: 'report-incident', loadChildren: () => import('./demo/components/report-form/report-form.module').then(m => m.ReportFormModule) },
                     //{ path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UikitModule) },
                     //{ path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
@@ -18,7 +18,7 @@ import { MydashboardComponent } from './demo/components/mydashboard/mydashboard.
                     //{ path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
                     //{ path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
                     // New Update Template
-                    //{ path: 'mydashboard', component: MydashboardComponent },
+                    // { path: 'mydashboard', component: MydashboardComponent },
                 ],
             },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
