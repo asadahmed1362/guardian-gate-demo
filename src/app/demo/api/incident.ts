@@ -8,3 +8,8 @@ export interface IncidentData {
     email?: string;
     status?: any;
   }
+
+  export interface IncidentType {
+    code: number;
+    name: string;
+  }

@@ -21,6 +21,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import {AutoCompleteModule } from 'primeng/autocomplete';
+import {SelectButtonModule} from 'primeng/selectbutton';
 
 @NgModule({
     imports: [
@@ -44,7 +46,9 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
         RadioButtonModule,
         InputNumberModule,
         DialogModule,
-        ToggleButtonModule
+        ToggleButtonModule,
+        AutoCompleteModule,
+        SelectButtonModule
     ],
     declarations: [ReportFormComponent]
 })

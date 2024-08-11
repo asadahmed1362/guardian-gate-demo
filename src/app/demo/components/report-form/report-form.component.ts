@@ -3,14 +3,15 @@ import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { IncidentReportService } from '../../service/incident-report.service';
-import { InputTextModule } from 'primeng/inputtext';
-import { Product } from 'src/app/demo/api/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { ProductService } from 'src/app/demo/service/product.service';
-import {IncidentData} from 'src/app/demo/api/incident';
+import {IncidentData, IncidentType} from 'src/app/demo/api/incident';
+import { KeyValueOptions } from '../../api/common';
 
-
+interface AutoCompleteCompleteEvent {
+    originalEvent: Event;
+    query: string;
+}
 
 @Component({
     templateUrl: './report-form.component.html',
@@ -28,20 +29,19 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     //     email:'asadahmed1362@hotmail.com',
     //     status: 'Reported'
     // };
-
+    
     incidentDialog: boolean = false
-    productDialog: boolean = false;
-
-    deleteProductDialog: boolean = false;
-    deleteProductsDialog: boolean = false;
-
+    incidentTypes : IncidentType[] = [];
+    filteredIncidentTypes : IncidentType[] = [];
     incidents : IncidentData[] = [];
-    products: Product[] = [];
+    
+    trueFalseOptions : KeyValueOptions[] = [];
 
-    incident:IncidentData = {};
-    product: Product = {};
+    incident:IncidentData = {
+        injuryOccured: false,
+        propertyDamage: false,
+    };
 
-    selectedProducts: Product[] = [];
     selectedIncidents: IncidentData[] = [];
 
     submitted: boolean = false;
@@ -57,7 +57,7 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     subscription!: Subscription;
 
     constructor(private incidentReportService: IncidentReportService, public layoutService: LayoutService,
-        private productService: ProductService, private messageService: MessageService
+        private messageService: MessageService
     ) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             
@@ -65,8 +65,10 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        //this.productService.getProducts().then(data => this.products = data);
+        this.incidentTypes =  this.incidentReportService.getIncidentTypes();
+        this.trueFalseOptions = this.incidentReportService.getTrueFalseOptions();
         this.incidents =  this.incidentReportService.getIncidents();
+        
 
         this.cols = [
             { field: 'incident', header: 'Incident' },
@@ -84,75 +86,19 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     }
 
     openNew() {
-        // this.product = {};
-        // this.submitted = false;
-        // this.productDialog = true;
         this.incidentDialog = true;
         this.incident = {};
         this.submitted = false;
     }
 
-    deleteSelectedProducts() {
-        // this.deleteProductsDialog = true;
-    }
-
-    editProduct(product: Product) {
-        // this.product = { ...product };
-        // this.productDialog = true;
-    }
-
-    deleteProduct(product: Product) {
-        // this.deleteProductDialog = true;
-        // this.product = { ...product };
-    }
-
-    confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-        this.selectedProducts = [];
-    }
-
-    confirmDelete() {
-        // this.deleteProductDialog = false;
-        // this.products = this.products.filter(val => val.id !== this.product.id);
-        // this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        // this.product = {};
-    }
-
     hideDialog() {
-        // this.productDialog = false;
-        // this.submitted = false;
         this.incidentDialog = false;
         this.submitted = false;
     }
 
-    saveProduct() {
-        this.submitted = true;
-
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-                this.products[this.findIndexById(this.product.id)] = this.product;
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-            } else {
-                this.product.id = this.createId();
-                this.product.code = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                // @ts-ignore
-                this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-                this.products.push(this.product);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-            }
-
-            this.products = [...this.products];
-            this.productDialog = false;
-            this.product = {};
-        }
-    }
-
     saveIncident() {
+        if(!this.isValid())
+            return;
         this.submitted = true;
         this.incident.status = "Reported";
         this.incident.email = "asadahmed1362@hotmail.com";
@@ -162,54 +108,58 @@ export class ReportFormComponent implements OnInit, OnDestroy {
             alert('Incident reported successfully!');
             this.incidents.push(this.incident);
             this.incidentDialog = false;
-            this.incident = {};
+            this.incident = {
+                injuryOccured: false,
+                propertyDamage: false,
+            };
           }, error => {
             console.error('Error reporting incident:', error);
             alert('Error reporting incident!');
             this.submitted = false;
           });
-    
     }
 
-    findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
-                index = i;
-                break;
+    filterIncidentType(event: AutoCompleteCompleteEvent) {
+        let filtered: any[] = [];
+        let query = event.query;
+
+        for (let i = 0; i < (this.incidentTypes as any[]).length; i++) {
+            let incidentType = (this.incidentTypes as any[])[i];
+            if (incidentType.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                filtered.push(incidentType);
             }
         }
 
-        return index;
-    }
-
-    createId(): string {
-        let id = '';
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
+        this.filteredIncidentTypes = filtered;
     }
 
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 
-    onSubmit() {
-        // this.incidentReportService.reportIncident(this.incidentData)
-        //   .subscribe(response => {
-        //     console.log('Incident reported:', response);
-        //     alert('Incident reported successfully!');
-        //   }, error => {
-        //     console.error('Error reporting incident:', error);
-        //     alert('Error reporting incident!');
-        //   });
-      }
-
     ngOnDestroy() {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
     }
+
+    isValid(): boolean {
+        // Validate that natureOfIncident is not empty
+        if (!this.incident.natureOfIncident || this.incident.natureOfIncident === '') {
+            return false;
+          }
+    
+        // Validate that numberOfRobbers is not null and greater than or equal to 1
+        if (!this.incident.numberOfRobbers  || this.incident.numberOfRobbers < 1) {
+          return false;
+        }
+    
+        // Validate that itemsRobbed is not empty
+        if (!this.incident.itemsRobbed || this.incident.itemsRobbed === '') {
+          return false;
+        }
+
+        // If all checks pass, the data is valid
+        return true;
+      }
 }

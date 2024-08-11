@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {IncidentData} from 'src/app/demo/api/incident';
+import {IncidentData, IncidentType} from 'src/app/demo/api/incident';
+import { KeyValueOptions } from 'src/app/demo/api/common';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,28 @@ import {IncidentData} from 'src/app/demo/api/incident';
     getProducts(): Observable<any> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       return this.http.get<any>(this.getApiUrl, { headers });
+    }
+
+    getIncidentTypes(): IncidentType[]{
+      return [
+        { code: 1, name: "Commercial Break and Enter" },
+        { code: 2, name: "Robbery" },
+        { code: 3, name: "Shoplifting" },
+        { code: 4, name: "Theft Under $5,000" },
+        { code: 5, name: "Theft Over $5,000" },
+        { code: 6, name: "Fraud" },
+        { code: 7, name: "Organized Retail Crime" },
+        { code: 8, name: "Vandalism" },
+        { code: 9, name: "Possession of Stolen Property" },
+        { code: 10, name: "Robbery with a Firearm" }
+      ];
+    }
+
+    getTrueFalseOptions(): KeyValueOptions[]{
+      return [
+        { code: 1, name: "True" },
+        { code: 2, name: "False" }
+      ];
     }
 
     // Method to get dummy incidents
