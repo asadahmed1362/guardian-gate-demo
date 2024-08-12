@@ -1,5 +1,5 @@
 export interface IncidentData {
-    incidentId?: number;
+    RowKey?: string;
     natureOfIncident?: string;
     numberOfRobbers?: number;
     itemsRobbed?: string;

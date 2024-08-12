@@ -16,12 +16,16 @@ export class IncidentDashboardComponent implements OnInit, OnDestroy {
     items!: MenuItem[];
 
     products!: Product[];
+    recentIncidents!: IncidentData[];
 
     chartData: any;
     robberyCard: any;
     shopliftingCard:any;
     theftUnderFiveK: any;
     theftOverFiveK:any;
+    basicData: any;
+
+    basicOptions: any;
 
     chartOptions: any;
 
@@ -36,6 +40,13 @@ export class IncidentDashboardComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.initChart();
         this.productService.getProductsSmall().then(data => this.products = data);
+        this.incidentReportService.getIncidentsFromAPI().subscribe(response => {
+            this.recentIncidents = response;
+          }, error => {
+            console.error('Error reporting incident:', error);
+            alert('Error reporting incident!');
+            
+          });
 
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
@@ -79,14 +90,67 @@ export class IncidentDashboardComponent implements OnInit, OnDestroy {
         };
       }
 
+    initBarChart(data:IncidentData[]){
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+        this.basicData = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October'],
+            datasets: [
+                {
+                    label: 'Theft Under $5000',
+                    backgroundColor: '#42A5F5',
+                    data: [65, 59, 80, 81, 56, 55, 40, 56, 55, 40]
+                },
+                {
+                    label: 'Theft Above $5000',
+                    backgroundColor: '#FFA726',
+                    data: [28, 48, 40, 19, 86, 27, 90,56, 55, 40]
+                }
+            ]
+        };
+        this.basicOptions = {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                }
+            }
+        };
+
+    }
+
     initChart() {
 
-        this.incidentReportService.getIncidentsAPI()
+        this.incidentReportService.getIncidentsFromAPI()
           .subscribe(response => {
             this.robberyCard = this.processIncidents(response,"Robbery",new Date('2024-07-12T09:30:00Z'));
             this.shopliftingCard = this.processIncidents(response,"Shoplifting",new Date('2024-07-12T09:30:00Z'));
             this.theftUnderFiveK = this.processIncidents(response,"Theft Under $5,000",new Date('2024-07-12T09:30:00Z'));
             this.theftOverFiveK = this.processIncidents(response,"Theft Over $5,000",new Date('2024-07-12T09:30:00Z'));
+            this.initBarChart(response);
           }, error => {
             console.error('Error reporting incident:', error);
             alert('Error reporting incident!');

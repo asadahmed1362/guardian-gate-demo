@@ -9,7 +9,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
   })
   export class IncidentReportService {
     private postApiUrl = 'https://prod-00.eastus.logic.azure.com/workflows/d0e8c3f0b6ba4f52b98680e01c3e2fc4/triggers/HTTP_Request_Received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FHTTP_Request_Received%2Frun&sv=1.0&sig=jSoPEJ56m2t8Lbp8_IN7EwqFxVdTQ0wJD-sjCsN8j_k';
-    private getApiUrl = 'https://prod-00.eastus.logic.azure.com/workflows/d0e8c3f0b6ba4f52b98680e01c3e2fc4/triggers/HTTP_Request_Received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FHTTP_Request_Received%2Frun&sv=1.0&sig=jSoPEJ56m2t8Lbp8_IN7EwqFxVdTQ0wJD-sjCsN8j_k';
+    private getApiUrl = 'https://prod-27.eastus.logic.azure.com/workflows/04a04e8217094131b68f904f29bed529/triggers/Incidents_Requested/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FIncidents_Requested%2Frun&sv=1.0&sig=r1l3zXTMDG9S3uDDbvV-Tyum38cjKY3mUnRqwYrt6zk';
   
     constructor(private http: HttpClient) { }
   
@@ -18,9 +18,9 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
       return this.http.post<any>(this.postApiUrl, incidentData, { headers });
     }
 
-    getProducts(): Observable<any> {
+    getIncidentsFromAPI(): Observable<IncidentData[]>{
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      return this.http.get<any>(this.getApiUrl, { headers });
+      return this.http.get<IncidentData[]>(this.getApiUrl, { headers });
     }
 
     getIncidentTypes(): IncidentType[]{
@@ -49,7 +49,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
   getIncidents(): IncidentData[] {
     const incidents: IncidentData[] = [
       {
-        incidentId: 1,
+        RowKey	: "1",
         natureOfIncident: 'Robbery',
         numberOfRobbers: 3,
         itemsRobbed: 'Jewelry, Cash',
@@ -59,7 +59,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         status: 'Reported'
       },
       {
-        incidentId: 2,
+        RowKey	: "2",
         natureOfIncident: 'Burglary',
         numberOfRobbers: 1,
         itemsRobbed: 'Electronics',
@@ -69,7 +69,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         status: 'Reported'
       },
       {
-        incidentId: 3,
+        RowKey	: "3",
         natureOfIncident: 'Assault',
         numberOfRobbers: 2,
         itemsRobbed: '',
@@ -83,10 +83,10 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
     return incidents;
   }
 
-  getIncidentsAPI(): Observable<IncidentData[]> {
+  getDummyIncidents(): Observable<IncidentData[]> {
     const incidents: IncidentData[] = [
       {
-        incidentId: 1,
+        RowKey	: "1",
         natureOfIncident: 'Robbery',
         numberOfRobbers: 3,
         itemsRobbed: 'Jewelry, Cash',
@@ -97,7 +97,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2023-01-15T10:00:00Z'),
       },
       {
-        incidentId: 2,
+        RowKey	: "2",
         natureOfIncident: 'Shoplifting',
         numberOfRobbers: 1,
         itemsRobbed: 'Clothing',
@@ -108,7 +108,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2023-03-22T14:30:00Z'),
       },
       {
-        incidentId: 3,
+        RowKey	: "3",
         natureOfIncident: 'Theft Under $5,000',
         numberOfRobbers: 2,
         itemsRobbed: 'Electronics',
@@ -119,7 +119,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2023-05-10T09:00:00Z'),
       },
       {
-        incidentId: 4,
+        RowKey	: "4",
         natureOfIncident: 'Fraud',
         numberOfRobbers: 1,
         itemsRobbed: 'Credit Card',
@@ -130,7 +130,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2023-07-30T13:15:00Z'),
       },
       {
-        incidentId: 5,
+        RowKey	: "5",
         natureOfIncident: 'Theft Over $5,000',
         numberOfRobbers: 4,
         itemsRobbed: 'Luxury Car',
@@ -141,7 +141,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2023-11-18T16:45:00Z'),
       },
       {
-        incidentId: 6,
+        RowKey	: "6",
         natureOfIncident: 'Robbery',
         numberOfRobbers: 3,
         itemsRobbed: 'Cash',
@@ -152,7 +152,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2024-01-10T11:00:00Z'),
       },
       {
-        incidentId: 7,
+        RowKey	: "7",
         natureOfIncident: 'Shoplifting',
         numberOfRobbers: 2,
         itemsRobbed: 'Groceries',
@@ -163,7 +163,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2024-03-05T14:00:00Z'),
       },
       {
-        incidentId: 8,
+        RowKey	: "8",
         natureOfIncident: 'Theft Under $5,000',
         numberOfRobbers: 1,
         itemsRobbed: 'Smartphone',
@@ -174,7 +174,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2024-06-12T09:30:00Z'),
       },
       {
-        incidentId: 9,
+        RowKey	: "9",
         natureOfIncident: 'Fraud',
         numberOfRobbers: 2,
         itemsRobbed: 'Bank Account',
@@ -185,7 +185,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2024-08-22T15:00:00Z'),
       },
       {
-        incidentId: 10,
+        RowKey	: "10",
         natureOfIncident: 'Theft Over $5,000',
         numberOfRobbers: 3,
         itemsRobbed: 'Jewelry',
@@ -196,7 +196,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
         timestamp: new Date('2024-12-30T18:20:00Z'),
       },
       {
-        incidentId: 11,
+        RowKey	: "11",
         natureOfIncident: 'Shoplifting',
         numberOfRobbers: 2,
         itemsRobbed: 'Groceries',

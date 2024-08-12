@@ -16,7 +16,7 @@
                 </ng-template> -->
             </p-toolbar>
 
-            <p-table #dt [value]="incidents" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['natureOfIncident','incidentId','numberOfRobbers','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedIncidents" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="incidents" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['natureOfIncident','RowKey','numberOfRobbers','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedIncidents" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <h5 class="m-0">My Incidents</h5>
@@ -31,7 +31,7 @@
                         <!-- <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th> -->
-                        <th pSortableColumn="incidentId">Incident # <p-sortIcon field="incidentId"></p-sortIcon></th>
+                        <th pSortableColumn="RowKey">Incident # <p-sortIcon field="RowKey"></p-sortIcon></th>
                         <th pSortableColumn="natureOfIncident">Nature <p-sortIcon field="natureOfIncident"></p-sortIcon></th>
                         <th pSortableColumn="numberOfRobbers">Number of Robbers <p-sortIcon field="numberOfRobbers"></p-sortIcon></th>
                         <!-- <th>Image</th> -->
@@ -49,7 +49,7 @@
                             <p-tableCheckbox [value]="product"></p-tableCheckbox>
                         </td> -->
                         <td style="width:14%; min-width:10rem;"><span class="p-column-title">#</span>
-                            {{incident.incidentId}}
+                            {{incident.RowKey}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Nature</span>

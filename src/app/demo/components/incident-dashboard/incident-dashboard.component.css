@@ -16,12 +16,12 @@
 {
     background-image: url("../../../../assets/demo/images/theftUnder5k.png");
     width: 25px;
-    height: 25px;
+    height: 15px;
 }
 
 .theftAbove5k-icon 
 {
     background-image: url("../../../../assets/demo/images/theftAbove5k.png");
     width: 25px;
-    height: 25px;
+    height: 18px;
 }

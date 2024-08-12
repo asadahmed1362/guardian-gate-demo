@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { IncidentDashboardsRoutingModule } from './incident-dashboard-routing.module';
+import { TagModule } from 'primeng/tag';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { IncidentDashboardsRoutingModule } from './incident-dashboard-routing.mo
         StyleClassModule,
         PanelMenuModule,
         ButtonModule,
-        IncidentDashboardsRoutingModule
+        IncidentDashboardsRoutingModule,
+        TagModule
     ],
     declarations: [IncidentDashboardComponent]
 })

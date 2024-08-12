@@ -20,7 +20,7 @@ interface AutoCompleteCompleteEvent {
 })
 export class ReportFormComponent implements OnInit, OnDestroy {
     // incidentData: IncidentData = {
-    //     incidentId: 1,
+    //     RowKey: "1",
     //     natureOfIncident: 'Robbery',
     //     numberOfRobbers: 2,
     //     itemsRobbed: 'Cash and Jewelry',
@@ -72,7 +72,7 @@ export class ReportFormComponent implements OnInit, OnDestroy {
 
         this.cols = [
             { field: 'incident', header: 'Incident' },
-            { field: 'incidentId', header: 'Incident Id' },
+            { field: 'RowKey', header: 'Incident Id' },
             { field: 'natureOfIncident', header: 'Nature Of Incident' },
             { field: 'inventoryStatus', header: 'Status' }
         ];
