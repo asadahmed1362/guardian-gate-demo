@@ -112,7 +112,7 @@ export class ReportFormComponent implements OnInit, OnDestroy {
         this.incident.natureOfIncident = this.selectedItem.name;
         this.incidentReportService.reportIncident(this.incident)
           .subscribe(response => {
-            console.log('Incident reported:', response);
+            this.messageService.add({severity:'success', summary:'Incident Reported', detail:'Incident has been generated : '+ response.IncidenceReference});
             this.incident.RowKey = response.IncidenceReference;
             this.incidents.push(this.incident);
             this.incidentDialog = false;
