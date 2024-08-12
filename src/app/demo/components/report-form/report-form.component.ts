@@ -34,6 +34,7 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     incidentTypes : IncidentType[] = [];
     filteredIncidentTypes : IncidentType[] = [];
     incidents : IncidentData[] = [];
+    selectedItem:any;
     
     trueFalseOptions : KeyValueOptions[] = [];
 
@@ -67,7 +68,12 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.incidentTypes =  this.incidentReportService.getIncidentTypes();
         this.trueFalseOptions = this.incidentReportService.getTrueFalseOptions();
-        this.incidents =  this.incidentReportService.getIncidents();
+        this.incidentReportService.getIncidentsFromAPI().subscribe(response => {
+            this.incidents =  response;
+          }, error => {
+            console.error('Error loading incident:', error);
+            
+          });
         
 
         this.cols = [
@@ -94,6 +100,7 @@ export class ReportFormComponent implements OnInit, OnDestroy {
     hideDialog() {
         this.incidentDialog = false;
         this.submitted = false;
+        this.selectedItem = '';
     }
 
     saveIncident() {
@@ -102,6 +109,7 @@ export class ReportFormComponent implements OnInit, OnDestroy {
         this.submitted = true;
         this.incident.status = "Reported";
         this.incident.email = "asadahmed1362@hotmail.com";
+        this.incident.natureOfIncident = this.selectedItem.name;
         this.incidentReportService.reportIncident(this.incident)
           .subscribe(response => {
             console.log('Incident reported:', response);
@@ -145,7 +153,8 @@ export class ReportFormComponent implements OnInit, OnDestroy {
 
     isValid(): boolean {
         // Validate that natureOfIncident is not empty
-        if (!this.incident.natureOfIncident || this.incident.natureOfIncident === '') {
+
+        if (!this.selectedItem || this.selectedItem.name === '') {
             return false;
           }
     

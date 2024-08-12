@@ -100,7 +100,7 @@
                 <!-- <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image"> -->
                 <div class="field">
                     <label for="natureOfIncident">Nature Of Incident</label>
-                    <p-autoComplete  [(ngModel)]="incident.natureOfIncident" [dropdown]="true" [suggestions]="filteredIncidentTypes" (completeMethod)="filterIncidentType($event)" 
+                    <p-autoComplete  [(ngModel)]="selectedItem" [dropdown]="true" [suggestions]="filteredIncidentTypes" (completeMethod)="filterIncidentType($event)" 
                     field="name" [showClear]="true" [required]="true" [autofocus]="true" [ngClass]="{'ng-invalid ng-dirty' : submitted && !incident.natureOfIncident}" 
                     placeholder="Select an incident type"></p-autoComplete>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !incident.natureOfIncident">Incident Name is required.</small>

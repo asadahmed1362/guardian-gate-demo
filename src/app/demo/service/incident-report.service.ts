@@ -8,7 +8,7 @@ import { KeyValueOptions } from 'src/app/demo/api/common';
     providedIn: 'root'
   })
   export class IncidentReportService {
-    private postApiUrl = 'https://prod-00.eastus.logic.azure.com/workflows/d0e8c3f0b6ba4f52b98680e01c3e2fc4/triggers/HTTP_Request_Received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FHTTP_Request_Received%2Frun&sv=1.0&sig=jSoPEJ56m2t8Lbp8_IN7EwqFxVdTQ0wJD-sjCsN8j_k';
+    private postApiUrl = 'https://prod-00.eastus.logic.azure.com/workflows/d0e8c3f0b6ba4f52b98680e01c3e2fc4/triggers/Incident_Reported/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FIncident_Reported%2Frun&sv=1.0&sig=6p_nKG4M7smwBYmZCsS-qv0r1uMB2SbYNIqLvLExOXY';
     private getApiUrl = 'https://prod-27.eastus.logic.azure.com/workflows/04a04e8217094131b68f904f29bed529/triggers/Incidents_Requested/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FIncidents_Requested%2Frun&sv=1.0&sig=r1l3zXTMDG9S3uDDbvV-Tyum38cjKY3mUnRqwYrt6zk';
   
     constructor(private http: HttpClient) { }
